@@ -1,3 +1,5 @@
+import { createEvent } from "@testing-library/dom"
+
 const Header = (baslik, tarih, yazi) => {
   // GÖREV 1
   // ---------------------
@@ -11,9 +13,31 @@ const Header = (baslik, tarih, yazi) => {
   //    <span class="temp">{ yazi }</span>
   //  </div>
   //
+
+   const Headerdiv = document.createElement("div")
+   Headerdiv.setAttribute("class" , "header") 
+
+   const span = document.createElement("span")
+   span.setAttribute("class" , "date")
+   span.textContent = tarih
+   Headerdiv.appendChild(span)
+   
+   const h1baslik = document.createElement("h1")
+   h1baslik.textContent = baslik
+   Headerdiv.appendChild(h1baslik)
+
+   const span1 = document.createElement("span")
+   span1.setAttribute("class" , "temp")
+   span1.textContent = yazi
+   Headerdiv.appendChild(span1)
+  
+  return Headerdiv
+
 }
 
 const headerEkleyici = (secici) => {
+
+
   // GÖREV 2
   // ---------------------
   // Tek argümanı olarak bir css seçici alan bu fonksiyonu uygulayın.
@@ -23,7 +47,10 @@ const headerEkleyici = (secici) => {
 
   // İPUCU: querySelector bir string alabilir (bknz: querySelector("#wrapper")) 
   // fakat aynı zamanda bir değişken de alabilir (bknz: querySelector(secici))
- 
+
+const secicidom = document.querySelector(secici)
+const headercb = Header("Teknoloji Zamanı" , "24/Mart/2023" , "Sağdaki Yazı")
+secicidom.appendChild(headercb)
 }
 
 export { Header, headerEkleyici }

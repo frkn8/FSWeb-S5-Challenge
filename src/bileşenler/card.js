@@ -1,3 +1,4 @@
+import axios from "axios";
 const Card = (makale) => {
   // GÖREV 5
   // ---------------------
@@ -17,7 +18,38 @@ const Card = (makale) => {
   //   </div>
   // </div>
   //
+const carddiv = document.createElement("div")
+carddiv.classList.add("card")
+
+const headlinediv = document.createElement("div")
+headlinediv.classList.add("headline")
+headlinediv.textContent = makale.anabaslik
+carddiv.appendChild(headlinediv)
+
+
+const authordiv= document.createElement("div")
+authordiv.classList.add("author")
+carddiv.appendChild(authordiv)
+
+const imgcont= document.createElement("div")
+imgcont.classList.add("img-container")
+authordiv.appendChild(imgcont)
+
+const imgsrc= document.createElement("img")
+imgsrc.setAttribute("src",makale.yazarFoto)
+//imgsrc.src="URL"
+imgcont.appendChild(imgsrc)
+
+const sp=document.createElement("span")
+sp.textContent = `${makale.yazarAdi} tarafından`;
+authordiv.appendChild(sp)
+   
+carddiv.addEventListener("click", function(event){console.log (headlinediv.textContent) })
+
+return carddiv;
 }
+
+
 
 const cardEkleyici = (secici) => {
   // GÖREV 6
@@ -28,6 +60,44 @@ const cardEkleyici = (secici) => {
   // Card bileşenini kullanarak yanıttaki her makale nesnesinden bir kart oluşturun.
   // Her cardı, fonksiyona iletilen seçiciyle eşleşen DOM'daki öğeye ekleyin.
   //
-}
+
+  const seciciCardDOM = document.querySelector(secici);
+  axios
+    .get("http://localhost:5001/api/makaleler")
+    .then(function (response) {
+      // handle success
+
+      /*
+      const data = [];
+
+      Object.values(response.data.makaleler).map((konular) => {
+        konular.forEach((element) => {
+          data.push(element);
+        });
+      });
+
+      data.forEach((makaleler) => {
+        seciciCardDOM.append(Card(makaleler));
+      });
+      */
+
+      for (let i in response.data.makaleler) {
+        response.data.makaleler[i].map((secilenMakale) => {
+          seciciCardDOM.append(Card(secilenMakale));
+        });
+      }
+
+      console.log(response);
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+};
+
 
 export { Card, cardEkleyici }
