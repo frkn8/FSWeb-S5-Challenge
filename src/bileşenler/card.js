@@ -67,20 +67,6 @@ const cardEkleyici = (secici) => {
     .then(function (response) {
       // handle success
 
-      /*
-      const data = [];
-
-      Object.values(response.data.makaleler).map((konular) => {
-        konular.forEach((element) => {
-          data.push(element);
-        });
-      });
-
-      data.forEach((makaleler) => {
-        seciciCardDOM.append(Card(makaleler));
-      });
-      */
-
       for (let i in response.data.makaleler) {
         response.data.makaleler[i].map((secilenMakale) => {
           seciciCardDOM.append(Card(secilenMakale));
